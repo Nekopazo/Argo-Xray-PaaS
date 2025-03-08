@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 
 # 默认各参数值，请自行修改.(注意:伪装路径不需要 / 符号开始,为避免不必要的麻烦,请不要使用特殊符号.)
-PORT=${PORT:-'8080'}
+PORT=${PORT:-'80'}
 UUID=${UUID:-'de04add9-5c68-8bab-950c-08cd5320df18'}
 WSPATH=${WSPATH:-'argo'}
 
-# 生成 Xray 配置文件
+# 生成配置文件
 cat > config.json << EOF
 {
     "log":{
@@ -87,91 +87,6 @@ cat > config.json << EOF
                 "security":"none",
                 "wsSettings":{
                     "path":"/${WSPATH}-vless"
-                }
-            },
-            "sniffing":{
-                "enabled":true,
-                "destOverride":[
-                    "http",
-                    "tls",
-                    "quic"
-                ],
-                "metadataOnly":false
-            }
-        },
-        {
-            "port":3003,
-            "listen":"127.0.0.1",
-            "protocol":"vmess",
-            "settings":{
-                "clients":[
-                    {
-                        "id":"${UUID}",
-                        "alterId":0
-                    }
-                ]
-            },
-            "streamSettings":{
-                "network":"ws",
-                "wsSettings":{
-                    "path":"/${WSPATH}-vmess"
-                }
-            },
-            "sniffing":{
-                "enabled":true,
-                "destOverride":[
-                    "http",
-                    "tls",
-                    "quic"
-                ],
-                "metadataOnly":false
-            }
-        },
-        {
-            "port":3004,
-            "listen":"127.0.0.1",
-            "protocol":"trojan",
-            "settings":{
-                "clients":[
-                    {
-                        "password":"${UUID}"
-                    }
-                ]
-            },
-            "streamSettings":{
-                "network":"ws",
-                "security":"none",
-                "wsSettings":{
-                    "path":"/${WSPATH}-trojan"
-                }
-            },
-            "sniffing":{
-                "enabled":true,
-                "destOverride":[
-                    "http",
-                    "tls",
-                    "quic"
-                ],
-                "metadataOnly":false
-            }
-        },
-        {
-            "port":3005,
-            "listen":"127.0.0.1",
-            "protocol":"shadowsocks",
-            "settings":{
-                "clients":[
-                    {
-                        "method":"chacha20-ietf-poly1305",
-                        "password":"${UUID}"
-                    }
-                ],
-                "decryption":"none"
-            },
-            "streamSettings":{
-                "network":"ws",
-                "wsSettings":{
-                    "path":"/${WSPATH}-shadowsocks"
                 }
             },
             "sniffing":{
